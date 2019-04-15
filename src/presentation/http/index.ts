@@ -1,6 +1,6 @@
 import { Express } from 'express';
-import hello from './hello';
+import { routerHello } from './hello';
 
 export const initHttpRouters = (app: Express) => {
-  app.use(hello);
+  app.use(routerHello);
 };
