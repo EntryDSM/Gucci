@@ -1,8 +1,8 @@
 import { Server as HttpServer } from 'http';
 import express, { Express } from 'express';
 import socketIo, { Server as SocketIo } from 'socket.io';
-import { initHttp } from './presentation/http';
-import { initWs } from './presentation/ws';
+import { initHttpRouters } from './presentation/http';
+import { initWsEventListeners } from './presentation/ws';
 
 class App {
   private httpServer: HttpServer;
@@ -10,10 +10,10 @@ class App {
   private socketApp: SocketIo;
   constructor() {
     this.expressApp = express();
-    initHttp(this.expressApp);
+    initHttpRouters(this.expressApp);
     this.httpServer = new HttpServer(this.expressApp);
     this.socketApp = socketIo(this.httpServer);
-    initWs(this.socketApp);
+    initWsEventListeners(this.socketApp);
   }
 
   public listen(port: number, listener: () => void) {
