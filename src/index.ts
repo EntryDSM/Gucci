@@ -1,8 +1,7 @@
 import app from './app';
+import { port } from './config';
 
 const server = app();
-
-const port = Number(process.env.PORT) || 8080;
 
 server.listen(port, () => {
   console.log(`listening on port:${port}`);
