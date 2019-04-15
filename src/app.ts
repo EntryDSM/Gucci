@@ -1,8 +1,8 @@
 import { Server as HttpServer } from 'http';
 import express, { Express } from 'express';
 import socketIo, { Server as SocketIo } from 'socket.io';
-import { initHttp } from './http';
-import { initWs } from './ws';
+import { initHttp } from './presentation/http';
+import { initWs } from './presentation/ws';
 
 class App {
   private httpServer: HttpServer;
