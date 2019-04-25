@@ -8,11 +8,13 @@ class App {
   private httpServer: HttpServer;
   private expressApp: Express;
   private socketApp: SocketIo;
+
   constructor() {
     this.expressApp = express();
-    initHttpRouters(this.expressApp);
     this.httpServer = new HttpServer(this.expressApp);
     this.socketApp = socketIo(this.httpServer);
+
+    initHttpRouters(this.expressApp);
     initWsEventListeners(this.socketApp);
   }
 
