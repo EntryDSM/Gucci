@@ -22,6 +22,15 @@ export class Auth {
 
       res.status(201).end();
     });
+
+    this.router.post('/login', async (req, res) => {
+      const user: User = req.body;
+
+      await verifyUser(this.userRepository, user);
+
+      const token = await jsonwebtoken.sign(user, jwtSecretKey);
+      res.json({ token });
+    });
   }
 
   getRouter() {

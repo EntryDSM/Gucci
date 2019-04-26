@@ -1,3 +1,4 @@
 import createUser from './createUser';
+import verifyUser from './verifyUser';
 
-export { createUser };
+export { createUser, verifyUser };
