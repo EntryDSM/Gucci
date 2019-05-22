@@ -1,9 +1,9 @@
 import { MongoClient } from 'mongodb';
-import { mongodbUri, mongodbName } from '../config';
+import { MONGODB_URI, MONGODB_NAME } from '../config';
 
 export const connectDb = async () => {
-  const client = await MongoClient.connect(mongodbUri, {
+  const client = await MongoClient.connect(MONGODB_URI, {
     useNewUrlParser: true,
   });
-  return client.db(mongodbName);
+  return client.db(MONGODB_NAME);
 };
