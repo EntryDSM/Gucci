@@ -9,10 +9,10 @@ export class InmemoryUserRepository implements UserRepository {
   }
 
   async create(user: User): Promise<boolean> {
-    const result: InsertOneWriteOpResult = await this.collection.insertOne(
-      user,
-    );
-    return !!result.result.ok;
+    const {
+      result: { ok },
+    }: InsertOneWriteOpResult = await this.collection.insertOne(user);
+    return !!ok;
   }
   async findByUsername(username: string): Promise<User | null> {
     return await this.collection.findOne({ username });
