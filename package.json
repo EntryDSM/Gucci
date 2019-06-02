@@ -24,8 +24,10 @@
   },
   "homepage": "https://github.com/EntryDSM/Gucci#readme",
   "devDependencies": {
+    "@types/cors": "^2.8.5",
     "@types/dotenv": "^6.1.1",
     "@types/express": "^4.16.1",
+    "@types/jsonwebtoken": "^8.3.2",
     "@types/mongodb": "^3.1.28",
     "@types/node": "^11.13.0",
     "@types/socket.io": "^2.1.2",
@@ -36,8 +38,10 @@
     "typescript": "^3.4.1"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
+    "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.2.6",
     "socket.io": "^2.2.0"
   }
