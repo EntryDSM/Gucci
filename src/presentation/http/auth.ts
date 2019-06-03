@@ -1,31 +1,27 @@
 import { Router } from 'express';
-import { Db, Collection } from 'mongodb';
+import { Db } from 'mongodb';
 import jsonwebtoken from 'jsonwebtoken';
 import { jwtSecretKey } from '../../config';
 import { HttpError } from './error';
-
-interface User {
-  email: string;
-  username?: string;
-  password: string;
-}
+import { User } from '../../entities/user';
+import { AuthMapper } from '../../database/mapper/auth';
 
 export class Auth {
   private router: Router;
-  private collection: Collection;
+  private authMapper: AuthMapper;
 
   constructor(private db: Db) {
     this.router = Router();
-    this.collection = db.collection('users');
+    this.authMapper = new AuthMapper(db);
 
     this.router.post('/register', async (req, res, next) => {
       const requestedUser: User = req.body;
 
-      if (await this.collection.findOne<User>({ email: requestedUser.email })) {
+      if (await this.authMapper.findByEmail(requestedUser.email)) {
         next(new HttpError(409, 'email already exists'));
       } else {
         try {
-          await this.collection.insertOne(requestedUser);
+          await this.authMapper.register(requestedUser);
         } catch (error) {
           next(new HttpError(500, error.message));
         }
@@ -38,9 +34,7 @@ export class Auth {
     this.router.post('/login', async (req, res, next) => {
       const requestedUser: User = req.body;
 
-      const user = await this.collection.findOne<User>({
-        email: requestedUser.email,
-      });
+      const user = await this.authMapper.findByEmail(requestedUser.email);
 
       if (user && user.password === requestedUser.password) {
         const token = await jsonwebtoken.sign(user, jwtSecretKey);
