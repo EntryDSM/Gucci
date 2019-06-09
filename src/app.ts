@@ -17,7 +17,7 @@ class App {
     this.socketApp = socketIo(this.httpServer);
 
     initHttpRouters(this.expressApp, this.db);
-    initWsEventListeners(this.socketApp);
+    initWsEventListeners(this.socketApp, this.db);
   }
 
   public listen(port: number, listener: () => void) {
