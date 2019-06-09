@@ -13,6 +13,6 @@ export class AuthMapper {
   }
 
   register = async (user: User) => {
-    this.collection.insert(user);
+    this.collection.insertOne(user);
   }
 }
