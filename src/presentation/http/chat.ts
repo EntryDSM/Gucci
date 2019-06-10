@@ -62,7 +62,9 @@ export class Chat {
           startMillisecond,
           limit,
         );
-        res.json(messages);
+
+        const reversedMessages = messages.reverse();
+        res.json(reversedMessages);
       } catch (error) {
         next(new HttpError(400, 'bad request'));
       }
