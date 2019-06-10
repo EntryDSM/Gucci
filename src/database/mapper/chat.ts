@@ -42,7 +42,7 @@ export class ChatMapper {
     const collection = this.db.collection<Message>(room);
     return await collection
       .find({ sendedAt: { $lt: startMillisecond } })
-      .sort({ sendedAt: 1 })
+      .sort({ sendedAt: -1 })
       .limit(limit)
       .toArray();
   }
