@@ -17,7 +17,8 @@ export class Auth {
     this.router.post('/register', async (req, res, next) => {
       const requestedUser: User = req.body;
 
-      if (await this.authMapper.findByEmail(requestedUser.email)) {
+      const user = await this.authMapper.findByEmail(requestedUser.email);
+      if (user) {
         next(new HttpError(409, 'email already exists'));
       } else {
         try {
@@ -27,7 +28,7 @@ export class Auth {
         }
 
         const token = await jsonwebtoken.sign(requestedUser, jwtSecretKey);
-        res.status(201).json(token);
+        res.status(201).json({ token, user });
       }
     });
 
@@ -38,9 +39,26 @@ export class Auth {
 
       if (user && user.password === requestedUser.password) {
         const token = await jsonwebtoken.sign(user, jwtSecretKey);
-        res.status(200).json(token);
+        res.status(201).json({ token, user });
       } else {
         next(new HttpError(401, 'unauthorized email or wrong password'));
+      }
+    });
+
+    this.router.get('/user', async (req, res, next) => {
+      const token = req.headers.authorization;
+
+      if (token) {
+        try {
+          const decoded = jsonwebtoken.verify(token, jwtSecretKey);
+
+          const { email, username } = <any>decoded;
+          res.json({ email, username });
+        } catch (error) {
+          next(new HttpError(401, 'invalid token'));
+        }
+      } else {
+        next(new HttpError(401, 'unauthorized'));
       }
     });
   }
