@@ -14,10 +14,19 @@ export class ChatMapper {
 
   updateMessageThread = async (messageThread: MessageThread) => {
     if (
-      !(await this.messageThreadCollection.findOne({
+      await this.messageThreadCollection.findOne({
         room: messageThread.room,
-      }))
+      })
     ) {
+      this.messageThreadCollection.updateOne(
+        { room: messageThread.room },
+        {
+          $set: {
+            latestMessage: messageThread.latestMessage,
+          },
+        },
+      );
+    } else {
       this.messageThreadCollection.insertOne(messageThread);
     }
   }
