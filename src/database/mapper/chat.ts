@@ -56,7 +56,7 @@ export class ChatMapper {
       .toArray();
   }
 
-  findRooms = async (
+  findMessageThreads = async (
     startMillisecond: number,
     limit: number,
   ): Promise<MessageThread[]> => {

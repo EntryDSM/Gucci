@@ -85,7 +85,7 @@ export class Chat {
           : Date.now();
         const limit = limitStr ? parseInt(limitStr, 10) : 1;
 
-        const messageThreads = await this.chatMapper.findRooms(
+        const messageThreads = await this.chatMapper.findMessageThreads(
           startMillisecond,
           limit,
         );
