@@ -62,7 +62,7 @@ export class ChatMapper {
   ): Promise<MessageThread[]> => {
     return await this.messageThreadCollection
       .find({ 'latestMessage.sendedAt': { $lt: startMillisecond } })
-      .sort({ sendedAt: -1 })
+      .sort({ 'latestMessage.sendedAt': -1 })
       .limit(limit)
       .toArray();
   }
